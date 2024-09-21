@@ -1,0 +1,133 @@
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		.main-container {
+			display: flex;
+			height: calc(100vh - 70px);
+			/* Adjust this based on your navbar height */
+			padding: 30px;
+			margin: 70px;
+		}
+
+		#chat-room-section {
+			flex: 3;
+			padding: 10px;
+			border-right: 1px solid #ccc;
+			display: flex;
+			flex-direction: column;
+		}
+
+		#friend-list-section {
+			flex: 1;
+			background-color: #f8f9fa;
+			padding: 10px;
+			overflow-y: auto;
+			border-right: 1px solid #ccc;
+		}
+
+		#blocked-section {
+			flex: 0.5;
+			background-color: #f8f9fa;
+			padding: 10px;
+			overflow-y: auto;
+			border-right: 1px solid #ccc;
+		}
+
+		#invitation-section {
+			flex: 0.5;
+			background-color: #f8f9fa;
+			padding: 10px;
+			overflow-y: auto;
+			border-right: 1px solid #ccc;
+		}
+
+		#additional-section {
+			flex: 1;
+			background-color: #f8f9fa;
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		#chat-messages {
+			flex-grow: 1;
+			overflow-y: auto;
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-bottom: 10px;
+			height: calc(100% - 60px);
+		}
+		#friend-link {
+            font-size: 1.25rem; /* Daha büyük yazı tipi boyutu */
+            font-weight: bold; /* Kalın yazı tipi */
+            color: #ffc107; /* Altın rengi */
+            text-transform: uppercase; /* Büyük harflerle göster */
+            letter-spacing: 2px; /* Harfler arasında boşluk */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Hafif gölge efekti */
+            transition: color 0.3s ease, transform 0.3s ease; /* Geçiş efektleri */
+        }
+		#friend-link i {
+            margin-right: 8px; /* İkon ile metin arasına boşluk ekle */
+        }
+
+        #friend-link:hover {
+            color: #ff5722; /* Turuncuya geçiş */
+            transform: scale(1.1); /* Hafif büyütme efekti */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Gölgeyi artır */
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Existing Navbar Here -->
+
+	<div class="main-container">
+		<!-- Friends List Section -->
+		<div id="friend-list-section">
+			<h2>Friends List</h2>
+			<ul id="friendsList" class="list-group"></ul>
+		</div>
+
+
+		<!-- Chat Room Section -->
+		<div id="chat-room-section">
+			<h2 class="card-title">Chat</h2>
+			<p id="username-display"></p>
+			<div id="chat-messages"></div>
+			<div class="input-group">
+				<input type="text" id="chat-message-input" class="form-control" placeholder="Type your message...">
+				<div class="input-group-append">
+					<button id="chat-message-submit" class="btn btn-primary">Send</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Additional Section -->
+		<div id="additional-section">
+			<!-- Add Friend Section -->
+			<div class="card mb-4" id="friend-section">
+				<div class="card-body">
+					<h2 class="card-title">Add Friend</h2>
+					<div class="form-group">
+						<input type="text" id="usernameInput" class="form-control" placeholder="Enter username">
+					</div>
+					<button id="sendRequestButton" class="btn btn-primary">Send Request</button>
+				</div>
+			</div>
+
+			<!-- Invitations Section -->
+
+			<div id="invitation-section">
+				<h2>Invitations</h2>
+				<ul id="invitationsList" class="list-group"></ul>
+			</div>
+			<div id="blocked-section">
+				<h2>Blocked Users</h2>
+				<ul id="BlockedList" class="list-group"></ul>
+			</div>
+
+		</div>
+	</div>
+</body>
