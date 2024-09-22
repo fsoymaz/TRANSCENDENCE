@@ -29,15 +29,16 @@
 
 1. Projeyi klonlayın:
     ```bash
-    git clone https://github.com/kullanıcı-adı/transcendence.git
+    git clone https://github.com/fsoymaz/TRANSCENDENCE.git
     ```
 
 2. Docker konteynerlerini başlatın:
     ```bash
-    docker-compose up --build
+    docker-compose up --build || make
     ```
 
 3. Uygulamaya tarayıcıdan erişin:
     ```
     http://localhost:8000
     ```
+4. Projede .env dosyası oluşturup kendi bilgileriniz ile doldurmanız gerekir
