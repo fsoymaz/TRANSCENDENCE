@@ -1,4 +1,4 @@
-# 🎮 **Transcendense Projesi**
+# 🎮 **Transcendence Projesi**
 
 ## 🚀 **Genel Bakış**
 
