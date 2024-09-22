@@ -33,7 +33,7 @@
 
 1. Projeyi klonlayın:
     ```bash
-    git clone https://github.com/kullanici-adiniz/proje-repo.git
+   https://github.com/fsoymaz/TRANSCENDENCE.git
     ```
     
 2. Projede bir `.env` dosyası oluşturup kendi bilgilerinizi girmeniz gerekmektedir. Django projelerinde settings dosyaları ve docker-compose dosyasındaki gizli veriler `.env` dosyasında saklanır.
