@@ -58,7 +58,7 @@
 
 5. Uygulamaya tarayıcıdan erişin:
     ```
-    http://localhost:8000
+    https://localhost:80
     ```
 
 ---
