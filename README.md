@@ -58,7 +58,7 @@
 
 5. Uygulamaya tarayıcıdan erişin:
     ```
-    https://localhost:80
+    https://localhost:80 || https://your_domain
     ```
 
 ---
