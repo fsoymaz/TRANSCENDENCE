@@ -31,18 +31,36 @@
 
 ### 🚀 **Kurulum Adımları**
 
-1. Projede bir `.env` dosyası oluşturup kendi bilgilerinizi girmeniz gerekmektedir. Django projelerinde settings dosyaları ve docker-compose dosyasındaki gizli veriler `.env` dosyasında saklanır.
-
-2. Projeyi klonlayın:
+1. Projeyi klonlayın:
     ```bash
-    git clone https://github.com
+    git clone https://github.com/kullanici-adiniz/proje-repo.git
+    ```
     
-3. Docker konteynerlerini başlatın:
+2. Projede bir `.env` dosyası oluşturup kendi bilgilerinizi girmeniz gerekmektedir. Django projelerinde settings dosyaları ve docker-compose dosyasındaki gizli veriler `.env` dosyasında saklanır.
+
+3. **Nginx Konfigürasyonu**:
+
+   - **Domain veya localhost**: Eğer bir domain ismine sahipseniz, Nginx yapılandırma dosyasındaki (`default.conf`) ilgili kısma domaininizi yazın. Eğer projenizi localde çalıştırıyorsanız, bu kısmı `localhost` olarak ayarlayabilirsiniz.
+
+   - **Frontend ile Backend arasındaki istekler**: Frontend'den backend'e istek atarken, eğer domain üzerinden yapıyorsanız, tüm isteklerin bu domain üzerinden gönderildiğinden emin olun. Aksi takdirde, yanlış yapılandırmalar sebebiyle hatalarla karşılaşabilirsiniz.
+
+   - **IP Değişiklikleri**: Nginx içinde kullanılan IP adresini değiştirmek için:
+     - VSCode'da arama yaparak Nginx yapılandırma dosyasındaki IP adresini bulun.
+     - Bulduğunuz IP adresini projenizin domaini veya kullanmak istediğiniz yeni IP adresiyle değiştirin.
+     - Tüm dosyalarda bu değişikliği yapmayı unutmayın.
+   
+   - **SSL Sertifikası**: Projenizin güvenliği için SSL sertifikası almayı ihmal etmeyin. Bu, özellikle domain üzerinden erişim sağlıyorsanız önemlidir ve projenizi HTTPS ile güvenli hale getirecektir.
+
+4. Docker konteynerlerini başlatın:
     ```bash
     docker-compose up --build || make
     ```
 
-4. Uygulamaya tarayıcıdan erişin:
+5. Uygulamaya tarayıcıdan erişin:
     ```
     http://localhost:8000
     ```
+
+---
+
+🎉 **Keyifli kullanımlar!**
