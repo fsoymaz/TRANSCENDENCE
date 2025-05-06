@@ -9,7 +9,7 @@ export function verifyCode() {
       const message = document.getElementById("message");
       let _cookie = document.cookie;
       const parse_cookie = parseJWT(_cookie);
-      fetch("https://10.11.38.2/api/2fa/", {
+      fetch("https://localhost/api/2fa/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import { parseJWT } from "./auth.js";
 import { loadPage } from "./pageLoader.js";
-const socket = new WebSocket("wss://10.11.38.2/ws/status/userstatus/");
+const socket = new WebSocket("wss://localhost/ws/status/userstatus/");
 
 function getSenderUsername() {
   const jwt = localStorage.getItem("jwt");
@@ -21,7 +21,7 @@ function getSenderId() {
 }
 
 async function getUserStatus(username) {
-  const url = `https://10.11.38.2/api/user-status/${username}/`;
+  const url = `https://localhost/api/user-status/${username}/`;
   try {
     const response = await fetch(url, {
       headers: {
@@ -59,7 +59,7 @@ export function setupFriendPage() {
 
 async function loadBlockedList() {
   const username = getSenderUsername(); // Kullanıcının adını al
-  const url = `https://10.11.38.2/api/friend-request/blocked-list/?username=${username}`;
+  const url = `https://localhost/api/friend-request/blocked-list/?username=${username}`;
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -102,7 +102,7 @@ async function loadBlockedList() {
 }
 
 async function unblockFriend(senderUsername, blockedUsername) {
-  const url = `https://10.11.38.2/api/friend-request/unblock/`;
+  const url = `https://localhost/api/friend-request/unblock/`;
   const data = {
     sender_username: senderUsername,
     receiver_username: blockedUsername,
@@ -133,7 +133,7 @@ async function unblockFriend(senderUsername, blockedUsername) {
 }
 
 async function sendFriendRequest(senderUsername, receiverUsername) {
-  const url = "https://10.11.38.2/api/friend-request/send/";
+  const url = "https://localhost/api/friend-request/send/";
   const data = {
     sender_username: senderUsername,
     username: receiverUsername,
@@ -162,7 +162,7 @@ async function sendFriendRequest(senderUsername, receiverUsername) {
 
 async function loadInvitations() {
   const username = getSenderUsername();
-  const url = `https://10.11.38.2/api/friend-request/invitations/?username=${username}`;
+  const url = `https://localhost/api/friend-request/invitations/?username=${username}`;
 
   try {
     const response = await fetch(url);
@@ -199,7 +199,7 @@ async function loadInvitations() {
 }
 
 async function blockFriend(senderUsername, receiverUsername) {
-  const url = "https://10.11.38.2/api/friend-request/blocked/";
+  const url = "https://localhost/api/friend-request/blocked/";
   const data = {
     sender_username: senderUsername,
     receiver_username: receiverUsername,
@@ -246,7 +246,7 @@ async function loadFriendsList() {
     return;
   }
   const username = getSenderUsername();
-  const url = `https://10.11.38.2/api/friend-request/friends/?username=${username}`;
+  const url = `https://localhost/api/friend-request/friends/?username=${username}`;
 
   try {
     const response = await fetch(url);
@@ -371,7 +371,7 @@ function grafikPage(username) {
   }
 
   // Define the URL to fetch data from using the provided username
-  const url = `https://10.11.38.2/game/user-stats/${username}`;
+  const url = `https://localhost/game/user-stats/${username}`;
 
   // Fetch user statistics and update modal content
   fetch(url)
@@ -409,8 +409,8 @@ function exampleOpenModalTrigger() {
 async function handleFriendRequest(senderUsername, receiverUsername, action) {
   const url =
     action === "accept"
-      ? "https://10.11.38.2/api/friend-request/accept/"
-      : "https://10.11.38.2/api/friend-request/decline/";
+      ? "https://localhost/api/friend-request/accept/"
+      : "https://localhost/api/friend-request/decline/";
 
   const data = {
     sender_username: senderUsername,
@@ -477,7 +477,7 @@ function setupChatRoom(roomName, userName) {
     chatSocket.close();
   }
 
-  chatSocket = new WebSocket(`wss://10.11.38.2/ws/chat/${roomName}/`);
+  chatSocket = new WebSocket(`wss://localhost/ws/chat/${roomName}/`);
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);

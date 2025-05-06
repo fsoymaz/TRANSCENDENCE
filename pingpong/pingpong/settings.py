@@ -25,14 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY_PONG")
+SECRET_KEY = 'django-insecure-htby_zs#54+71jh@b*#6sc(kz$os#lwi+b9k^*ub^sd^liw#no'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 
-#ALLOWED_HOSTS = ['10.11.38.2', 'localhost', '127.0.0.1']
+#ALLOWED_HOSTS = ['localhost', 'localhost', 'localhost']
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 
@@ -154,7 +154,10 @@ STATIC_URL = '/static/'
 #     BASE_DIR / "static",
 # ]
 
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if host]
+CORS_ORIGIN_WHITELIST = [f"https://{host}" for host in os.getenv("CORS_ORIGIN_WHITELIST", "").split(",") if host]
 
+CORS_ALLOW_CREDENTIALS = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

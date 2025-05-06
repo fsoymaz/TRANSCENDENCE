@@ -1,7 +1,7 @@
 from django.http import HttpResponseForbidden
 from django.utils.deprecation import MiddlewareMixin
 
-ALLOWED_REFERER = 'https://10.11.38.2'
+ALLOWED_REFERER = 'https://localhost'
 
 class BlockExternalRequestsMiddleware(MiddlewareMixin):
     def process_request(self, request):

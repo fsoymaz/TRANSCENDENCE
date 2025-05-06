@@ -12,7 +12,7 @@ export function setupHome() {
   if (currentUrl.includes("code=") && !localStorage.getItem("jwt")) {
     var code = currentUrl.split("code=")[1];
     code = code.split(/[&#]/)[0];
-    fetch("https://10.11.38.2/api/login42/", {
+    fetch("https://localhost/api/login42/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export function setupHome() {
             loadPage("2fa");
           } else {
             localStorage.setItem("jwt", data.token);
-            window.location.href = "https://10.11.38.2/#home"; // Replace with your Google login URL
+            window.location.href = "https://localhost/#home"; // Replace with your Google login URL
           }
         } else {
           console.error("JWT not found in response");

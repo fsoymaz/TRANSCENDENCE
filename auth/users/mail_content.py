@@ -48,7 +48,7 @@ welcome_content = """
         <div class="email-body">
             <p>Merhaba,</p>
             <p>Web sitemize kayıt olduğunuz için teşekkür ederiz. Sizi aramızda görmekten mutluluk duyuyoruz.</p>
-            <p>Teşekkürler,<br>10.11.38.2</p>
+            <p>Teşekkürler,<br>localhost</p>
         </div>
         <div class="email-footer">
             <p>&copy; 2024 Web Siteniz. Tüm hakları saklıdır.</p>
@@ -108,7 +108,7 @@ resetpass_content = """
         <div class="email-body">
             <p>Merhabalar,</p>
             <p>Doğrulama şifreniz mail konusundadır. Doğrulama şifrenizi girerek hesap şifrenizi değiştirebilirsiniz.</p>
-            <p>Teşekkürler,<br>10.11.38.2</p>
+            <p>Teşekkürler,<br>localhost</p>
         </div>
         <div class="email-footer">
             <p>&copy; 2024 Web Siteniz. Tüm hakları saklıdır.</p>
@@ -193,7 +193,7 @@ def qr_code_mailf(path_to_qr, recipient_email, qr_code_url):
                 
                 <img src="cid:qrcode">
                 <p>{qr_code_url}</p>
-                <p>Teşekkürler,<br>10.11.38.2</p>
+                <p>Teşekkürler,<br>localhost</p>
             </div>
             <div class="email-footer">
                 <p>&copy; 2024 Web Siteniz. Tüm hakları saklıdır.</p>

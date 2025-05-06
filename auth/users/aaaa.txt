@@ -242,7 +242,7 @@ class Login42View(APIView):
             'code': code,
             'client_secret': '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',
             'grant_type': 'authorization_code',
-            'redirect_uri': 'https://10.11.38.2',
+            'redirect_uri': 'https://localhost',
         }
 
         response = requests.post(url1, json=data)

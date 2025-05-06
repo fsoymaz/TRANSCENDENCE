@@ -26,18 +26,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY_CHAT")
+SECRET_KEY = 'django-insecure-htby_zs#54+71jh@b*#6sc(kz$os#lwi+b9k^*ub^sd^liw#no'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 
 #ALLOWED_HOSTS = ['10.11.38.2', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = ['*']
+docker-compose restart nginx
+# Ensure CSRF_TRUSTED_ORIGINS and CORS_ORIGIN_WHITELIST values start with a scheme (http:// or https://)
+CSRF_TRUSTED_ORIGINS = [origin for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.startswith("http://") or origin.startswith("https://")]
 
-CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "").split(",")
-
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+CORS_ORIGIN_WHITELIST = [origin for origin in os.getenv("CORS_ORIGIN_WHITELIST", "").split(",") if origin.startswith("http://") or origin.startswith("https://")]
 
 
 # Application definition

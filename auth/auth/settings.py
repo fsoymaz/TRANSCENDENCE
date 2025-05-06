@@ -21,7 +21,7 @@ load_dotenv()
 
 # Çevresel değişkenleri kullanır
 #SECRET_KEY = 'django-insecure-htby_zs#54+71jh@b*#6sc(kz$os#lwi+b9k^*ub^sd^liw#no'
-SECRET_KEY = os.getenv("SECRET_KEY_AUTH")
+SECRET_KEY = 'django-insecure-htby_zs#54+71jh@b*#6sc(kz$os#lwi+b9k^*ub^sd^liw#no'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = ['*']
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -166,16 +166,11 @@ AUTH_USER_MODEL = 'users.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOW_ALL = False
+CORS_ALLOW_ALL = True
 
-#CSRF_TRUSTED_ORIGINS = ['https://10.11.38.2']
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
-# CORS_ORIGIN_WHITELIST = [
-#     'https://10.11.38.2',
-#     ]
-
-#print("WHITE LİST = ", os.getenv("CORS_ORIGIN_WHITELIST", "").split(","))
-CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "").split(",")
+#CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if host]
+CORS_ORIGIN_WHITELIST = [f"https://{host}" for host in os.getenv("CORS_ORIGIN_WHITELIST", "").split(",") if host]
 
 CORS_ALLOW_CREDENTIALS = True
 

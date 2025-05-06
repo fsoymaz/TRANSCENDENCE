@@ -52,7 +52,7 @@ export function setupLoginForm() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      fetch("https://10.11.38.2/api/login/", {
+      fetch("https://localhost/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export function setupLoginForm() {
             if (parseJWT(data.token).twofactoractive) {
               loadPage("2fa");
               const socket = new WebSocket(
-                "wss://10.11.38.2/ws/status/userstatus/"
+                "wss://localhost/ws/status/userstatus/"
               );
               socket.onopen = () => {
                 socket.send("0");
@@ -78,7 +78,7 @@ export function setupLoginForm() {
             } else {
               loadPage("home");
               const socket = new WebSocket(
-                "wss://10.11.38.2/ws/status/userstatus/"
+                "wss://localhost/ws/status/userstatus/"
               );
               socket.onopen = () => {
                 socket.send("0");
@@ -105,7 +105,7 @@ export function setupLoginForm() {
   login42Link.addEventListener("click", function (event) {
     event.preventDefault();
     window.location.href =
-      "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-466f8ff9df025fc510352c0b2b970477cd8618f031b1e7e196e8f573b492ae53&redirect_uri=https%3A%2F%2F10.11.38.2&response_type=code";
+      "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-466f8ff9df025fc510352c0b2b970477cd8618f031b1e7e196e8f573b492ae53&redirect_uri=https%3A%2F%2Flocalhost&response_type=code";
   });
 }
 
@@ -119,7 +119,7 @@ export function setupRegisterForm() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      fetch("https://10.11.38.2/api/register/", {
+      fetch("https://localhost/api/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -149,7 +149,7 @@ export function setupRegisterForm() {
 
 export function logout() {
   const email = getSenderEmail();
-  fetch("https://10.11.38.2/api/logout/", {
+  fetch("https://localhost/api/logout/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -163,7 +163,7 @@ export function logout() {
       localStorage.removeItem("jwt");
       localStorage.removeItem("jwt42");
       loadPage("login"); // Kullanıcıyı giriş sayfasına yönlendirin
-      const socket = new WebSocket("wss://10.11.38.2/ws/status/userstatus/");
+      const socket = new WebSocket("wss://localhost/ws/status/userstatus/");
       socket.onopen = () => {
         socket.send("0");
         socket.close();
