@@ -1,12 +1,352 @@
 <body>
-	<section>
-		<div class="container bg-white p-4 rounded shadow-sm" style="max-width: 300px; z-index: 2;">
-			<h2 class="mb-4 text-center">Two-Factor Authentication</h2>
-			<div class="mb-3">
-				<input type="text" id="userCode" class="form-control" placeholder="Enter your 2FA code" />
-			</div>
-			<button id="verifyButton" class="btn btn-success w-100">Verify</button>
-			<div class="message mt-3 text-danger fw-bold" id="message"></div>
-		</div>
-	</section>
-</body>
+	<style>
+	  /* Base styles */
+	  body {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Poppins', sans-serif;
+		padding: 20px;
+		margin: 0;
+	  }
+  
+	  /* 2FA Container */
+	  .tfa-container {
+		max-width: 400px;
+		width: 100%;
+		background: rgba(255, 255, 255, 0.95);
+		border-radius: 20px;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+		padding: 40px 30px;
+		position: relative;
+		overflow: hidden;
+		transition: all 0.3s ease;
+	  }
+  
+	  .tfa-container:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+	  }
+  
+	  /* Decorative elements */
+	  .tfa-container::before {
+		content: '';
+		position: absolute;
+		top: -50px;
+		left: -50px;
+		width: 100px;
+		height: 100px;
+		background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+		border-radius: 50%;
+		opacity: 0.5;
+		z-index: -1;
+	  }
+  
+	  .tfa-container::after {
+		content: '';
+		position: absolute;
+		bottom: -50px;
+		right: -50px;
+		width: 100px;
+		height: 100px;
+		background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+		border-radius: 50%;
+		opacity: 0.5;
+		z-index: -1;
+	  }
+  
+	  /* Header */
+	  .tfa-header {
+		text-align: center;
+		margin-bottom: 30px;
+	  }
+  
+	  .tfa-title {
+		font-size: 1.8rem;
+		font-weight: 700;
+		color: #333;
+		margin-bottom: 10px;
+	  }
+  
+	  .tfa-subtitle {
+		font-size: 0.9rem;
+		color: #666;
+		max-width: 80%;
+		margin: 0 auto;
+	  }
+  
+	  /* Icon */
+	  .tfa-icon {
+		text-align: center;
+		margin-bottom: 25px;
+	  }
+  
+	  .tfa-icon i {
+		font-size: 3.5rem;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		display: inline-block;
+	  }
+  
+	  /* Code input */
+	  .code-input-container {
+		margin-bottom: 25px;
+		position: relative;
+	  }
+  
+	  .code-input {
+		width: 100%;
+		padding: 15px 20px;
+		font-size: 1.2rem;
+		letter-spacing: 5px;
+		text-align: center;
+		border: 2px solid #e0e0e0;
+		border-radius: 12px;
+		background-color: #f9f9f9;
+		transition: all 0.3s ease;
+		font-family: 'Courier New', monospace;
+		font-weight: 600;
+	  }
+  
+	  .code-input:focus {
+		border-color: #667eea;
+		box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+		outline: none;
+	  }
+  
+	  .code-input::placeholder {
+		letter-spacing: normal;
+		font-family: 'Poppins', sans-serif;
+		font-weight: normal;
+		color: #aaa;
+	  }
+  
+	  /* Timer */
+	  .code-timer {
+		position: absolute;
+		right: 15px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 0.8rem;
+		color: #666;
+		background-color: #f0f0f0;
+		padding: 3px 8px;
+		border-radius: 10px;
+	  }
+  
+	  /* Verify button */
+	  .verify-button {
+		width: 100%;
+		padding: 15px;
+		border: none;
+		border-radius: 12px;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+		position: relative;
+		overflow: hidden;
+	  }
+  
+	  .verify-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+	  }
+  
+	  .verify-button:active {
+		transform: translateY(0);
+	  }
+  
+	  .verify-button::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+		transition: all 0.5s ease;
+	  }
+  
+	  .verify-button:hover::after {
+		left: 100%;
+	  }
+  
+	  /* Message */
+	  .message-container {
+		margin-top: 20px;
+		text-align: center;
+		min-height: 24px;
+	  }
+  
+	  .error-message {
+		color: #e53935;
+		font-size: 0.9rem;
+		font-weight: 500;
+		animation: shake 0.5s ease-in-out;
+	  }
+  
+	  @keyframes shake {
+		0%, 100% { transform: translateX(0); }
+		20%, 60% { transform: translateX(-5px); }
+		40%, 80% { transform: translateX(5px); }
+	  }
+  
+	  .success-message {
+		color: #43a047;
+		font-size: 0.9rem;
+		font-weight: 500;
+		animation: fadeIn 0.5s ease-in-out;
+	  }
+  
+	  @keyframes fadeIn {
+		from { opacity: 0; transform: translateY(-10px); }
+		to { opacity: 1; transform: translateY(0); }
+	  }
+  
+	  /* Help text */
+	  .help-text {
+		text-align: center;
+		margin-top: 25px;
+		font-size: 0.85rem;
+		color: #666;
+	  }
+  
+	  .help-text a {
+		color: #667eea;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s ease;
+	  }
+  
+	  .help-text a:hover {
+		color: #764ba2;
+		text-decoration: underline;
+	  }
+  
+	  /* Responsive adjustments */
+	  @media (max-width: 480px) {
+		.tfa-container {
+		  padding: 30px 20px;
+		}
+		
+		.tfa-title {
+		  font-size: 1.5rem;
+		}
+		
+		.code-input {
+		  font-size: 1rem;
+		  padding: 12px 15px;
+		}
+	  }
+	</style>
+  
+	<!-- Font Awesome for icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+	<div class="tfa-container">
+	  <div class="tfa-header">
+		<h2 class="tfa-title">Two-Factor Authentication</h2>
+		<p class="tfa-subtitle">Enter the 6-digit code from your authenticator app</p>
+	  </div>
+	  
+	  <div class="tfa-icon">
+		<i class="fas fa-shield-alt"></i>
+	  </div>
+	  
+	  <div class="code-input-container">
+		<input 
+		  type="text" 
+		  id="userCode" 
+		  class="code-input" 
+		  placeholder="Enter code" 
+		  maxlength="6" 
+		  autocomplete="off"
+		  inputmode="numeric"
+		  pattern="[0-9]*"
+		/>
+	  </div>
+	  
+	  <button id="verifyButton" class="verify-button">
+		<i class="fas fa-check-circle"></i> Verify Code
+	  </button>
+	  
+	  <div class="message-container">
+		<div id="message" class="error-message"></div>
+	  </div>
+	  
+	  <div class="help-text">
+		Didn't receive a code? <a href="#">Try another method</a>
+	  </div>
+	</div>
+  
+	<script>
+	  // Timer functionality
+	  function startTimer(duration, display) {
+		let timer = duration;
+		const interval = setInterval(function() {
+		  display.textContent = timer + 's';
+		  
+		  if (--timer < 0) {
+			timer = duration;
+		  }
+		  
+		  // Change color when time is running out
+		  if (timer < 10) {
+			display.style.color = '#e53935';
+		  } else {
+			display.style.color = '#666';
+		  }
+		}, 1000);
+	  }
+	  
+	  // Start the timer when page loads
+	  window.onload = function() {
+		const thirtySeconds = 30;
+		const display = document.getElementById('codeTimer');
+		startTimer(thirtySeconds, display);
+		
+		// Focus on input field
+		document.getElementById('userCode').focus();
+	  };
+	  
+	  // Handle verification
+	  document.getElementById('verifyButton').addEventListener('click', function() {
+		const code = document.getElementById('userCode').value;
+		const messageElement = document.getElementById('message');
+		
+		if (code.length !== 6) {
+		  messageElement.textContent = 'Please enter a 6-digit code';
+		  messageElement.className = 'error-message';
+		  return;
+		}
+		
+		// This is where you would normally verify the code with your backend
+		// For demo purposes, we'll just show a success or error message
+		if (code === '123456') { // Demo valid code
+		  messageElement.textContent = 'Verification successful!';
+		  messageElement.className = 'success-message';
+		  
+		  // Redirect after successful verification (in a real app)
+		  // setTimeout(() => window.location.href = '/dashboard', 1500);
+		} else {
+		  messageElement.textContent = 'Invalid code. Please try again.';
+		  messageElement.className = 'error-message';
+		}
+	  });
+	  
+	  // Auto-format input to show only numbers
+	  document.getElementById('userCode').addEventListener('input', function(e) {
+		e.target.value = e.target.value.replace(/[^0-9]/g, '');
+	  });
+	</script>
+  </body>

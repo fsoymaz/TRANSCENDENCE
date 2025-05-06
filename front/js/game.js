@@ -201,8 +201,8 @@ export function setupGame() {
           roomNumber: roomName,
         }),
       }).then((response) => {
-        console.log("Joined the game, notifying host...");
-        gameLoop(roomName, false, false);
+          console.log("Joined the game, notifying host...");
+          gameLoop(roomName, false, false);
       });
     });
 

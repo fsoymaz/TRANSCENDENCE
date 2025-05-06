@@ -1,41 +1,301 @@
 <body>
 	<style>
-		#profile-link {
-            font-size: 1.25rem; /* Daha büyük yazı tipi boyutu */
-            font-weight: bold; /* Kalın yazı tipi */
-            color: #ffc107; /* Altın rengi */
-            text-transform: uppercase; /* Büyük harflerle göster */
-            letter-spacing: 2px; /* Harfler arasında boşluk */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Hafif gölge efekti */
-            transition: color 0.3s ease, transform 0.3s ease; /* Geçiş efektleri */
-        }
-		#profile-link i {
-            margin-right: 8px; /* İkon ile metin arasına boşluk ekle */
-        }
-
-        #profile-link:hover {
-            color: #ff5722; /* Turuncuya geçiş */
-            transform: scale(1.1); /* Hafif büyütme efekti */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Gölgeyi artır */
+	  /* Base styles */
+	  body {
+		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Poppins', sans-serif;
+		padding: 20px;
+	  }
+  
+	  /* Profile card */
+	  .profile-card {
+		width: 100%;
+		max-width: 380px;
+		background: #fff;
+		border-radius: 20px;
+		box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+		padding: 0;
+		overflow: hidden;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	  }
+  
+	  .profile-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 40px rgba(50, 50, 93, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+	  }
+  
+	  /* Profile header */
+	  .profile-header {
+		background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+		padding: 30px 20px 20px;
+		color: white;
+		text-align: center;
+		position: relative;
+	  }
+  
+	  /* Profile image */
+	  .profile-image-wrapper {
+		position: relative;
+		width: 130px;
+		height: 130px;
+		margin: 0 auto;
+		border-radius: 50%;
+		border: 5px solid rgba(255, 255, 255, 0.2);
+		overflow: hidden;
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+		transition: transform 0.3s ease;
+	  }
+  
+	  .profile-image-wrapper:hover {
+		transform: scale(1.05);
+	  }
+  
+	  #profile-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: filter 0.3s ease;
+	  }
+  
+	  .profile-image-wrapper:hover #profile-image {
+		filter: brightness(0.8);
+	  }
+  
+	  #change-image-button {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(0, 0, 0, 0.7);
+		color: white;
+		border: none;
+		padding: 8px 0;
+		font-size: 0.8rem;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		cursor: pointer;
+	  }
+  
+	  .profile-image-wrapper:hover #change-image-button {
+		opacity: 1;
+	  }
+  
+	  /* Username */
+	  #username-id {
+		margin-top: 15px;
+		margin-bottom: 5px;
+		font-weight: 600;
+		font-size: 1.8rem;
+		color: white;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	  }
+  
+	  .user-status {
+		display: inline-block;
+		padding: 4px 12px;
+		background-color: rgba(255, 255, 255, 0.2);
+		border-radius: 20px;
+		font-size: 0.8rem;
+		margin-bottom: 15px;
+	  }
+  
+	  .user-status i {
+		color: #4ade80;
+		margin-right: 5px;
+	  }
+  
+	  /* Profile body */
+	  .profile-body {
+		padding: 30px;
+	  }
+  
+	  /* Stats */
+	  .user-stats {
+		display: flex;
+		justify-content: space-around;
+		margin-bottom: 25px;
+		text-align: center;
+	  }
+  
+	  .stat-item {
+		flex: 1;
+		padding: 10px;
+	  }
+  
+	  .stat-value {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #6a11cb;
+		margin-bottom: 5px;
+	  }
+  
+	  .stat-label {
+		font-size: 0.8rem;
+		color: #64748b;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	  }
+  
+	  /* Profile buttons */
+	  .profile-buttons {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	  }
+  
+	  .profile-btn {
+		border: none;
+		border-radius: 12px;
+		padding: 14px;
+		font-weight: 600;
+		font-size: 0.95rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		cursor: pointer;
+		box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+	  }
+  
+	  .profile-btn i {
+		margin-right: 10px;
+		font-size: 1.1rem;
+	  }
+  
+	  .btn-username {
+		background-color: #f8f9fa;
+		color: #495057;
+	  }
+  
+	  .btn-username:hover {
+		background-color: #e9ecef;
+		transform: translateY(-2px);
+	  }
+  
+	  .btn-2fa {
+		background: linear-gradient(120deg, #4facfe 0%, #00f2fe 100%);
+		color: white;
+	  }
+  
+	  .btn-2fa:hover {
+		background: linear-gradient(120deg, #00f2fe 0%, #4facfe 100%);
+		transform: translateY(-2px);
+	  }
+  
+	  .btn-password {
+		background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+		color: white;
+	  }
+  
+	  .btn-password:hover {
+		background: linear-gradient(120deg, #fda085 0%, #f6d365 100%);
+		transform: translateY(-2px);
+	  }
+  
+	  .btn-logout {
+		background-color: #f8f9fa;
+		color: #dc3545;
+	  }
+  
+	  .btn-logout:hover {
+		background-color: #fee2e2;
+		color: #b91c1c;
+		transform: translateY(-2px);
+	  }
+  
+	  /* Activity indicator */
+	  .last-activity {
+		text-align: center;
+		margin-top: 20px;
+		font-size: 0.8rem;
+		color: #64748b;
+	  }
+  
+	  /* Responsive adjustments */
+	  @media (max-width: 480px) {
+		.profile-card {
+		  max-width: 100%;
 		}
+		
+		.profile-header {
+		  padding: 20px 15px 15px;
+		}
+		
+		.profile-image-wrapper {
+		  width: 100px;
+		  height: 100px;
+		}
+		
+		#username-id {
+		  font-size: 1.5rem;
+		}
+		
+		.profile-body {
+		  padding: 20px;
+		}
+		
+		.stat-value {
+		  font-size: 1.2rem;
+		}
+	  }
 	</style>
-	<section>
-		<div class="card shadow-sm" style="width: 18rem; z-index: 2;">
-			<div class="card-body text-center">
-				<div class="position-relative">
-					<img id="profile-image" src="" alt="default" class="rounded-circle mb-3"
-						style="width: 100px; height: 100px; object-fit: cover;">
-					<button
-						class="btn btn-sm btn-dark position-absolute top-50 start-50 translate-middle opacity-0 hover-opacity-100"
-						id="change-image-button" style="border-radius: 50%;">Change Image</button>
-				</div>
-				<div class="mt-3">
-					<h2 id="username-id">s</h2>
-					<button class="btn btn-outline-secondary w-100 mb-2" id="name-button"></button>
-					<button class="btn btn-primary w-100 mb-2" id="2fa-button">2FA Activate</button>
-					<button class="btn btn-primary w-100" id="change-password-button">Change Password</button>
-				</div>
-			</div>
+  
+	<!-- Font Awesome for icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+	<div class="profile-card">
+	  <div class="profile-header">
+		<div class="profile-image-wrapper">
+		  <img id="profile-image" src="https://via.placeholder.com/150" alt="Profile Image">
+		  <button id="change-image-button">
+			<i class="fas fa-camera"></i> Change Photo
+		  </button>
 		</div>
-	</section>
-</body>
+		<h3 id="username-id">Fatih</h3>
+		<div class="user-status">
+		  <i class="fas fa-circle"></i> Online
+		</div>
+	  </div>
+	  
+	  <div class="profile-body">
+		<div class="user-stats">
+		  <div class="stat-item">
+			<div class="stat-value">42</div>
+			<div class="stat-label">Games</div>
+		  </div>
+		  <div class="stat-item">
+			<div class="stat-value">28</div>
+			<div class="stat-label">Wins</div>
+		  </div>
+		  <div class="stat-item">
+			<div class="stat-value">67%</div>
+			<div class="stat-label">Win Rate</div>
+		  </div>
+		</div>
+		
+		<div class="profile-buttons">
+		  <button class="profile-btn btn-username" id="name-button">
+		  </button>
+		  <button class="profile-btn btn-2fa" id="2fa-button">
+			<i class="fas fa-shield-alt"></i> 2FA Activate
+		  </button>
+		  <button class="profile-btn btn-password" id="change-password-button">
+			<i class="fas fa-key"></i> Change Password
+		  </button>
+		</div>
+	  </div>
+	</div>
+  
+	<script>
+	  document.getElementById('change-image-button').addEventListener('click', function() {
+		alert('This would open a file picker in a real implementation');
+	  });
+	</script>
+  </body>

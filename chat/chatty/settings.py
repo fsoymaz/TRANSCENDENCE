@@ -32,13 +32,10 @@ SECRET_KEY = 'django-insecure-htby_zs#54+71jh@b*#6sc(kz$os#lwi+b9k^*ub^sd^liw#no
 DEBUG = True
 
 
-#ALLOWED_HOSTS = ['10.11.38.2', 'localhost', '127.0.0.1']
+#ALLOWED_HOSTS = ['localhost', 'localhost', '127.0.0.1']
 ALLOWED_HOSTS = ['*']
-docker-compose restart nginx
-# Ensure CSRF_TRUSTED_ORIGINS and CORS_ORIGIN_WHITELIST values start with a scheme (http:// or https://)
-CSRF_TRUSTED_ORIGINS = [origin for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.startswith("http://") or origin.startswith("https://")]
 
-CORS_ORIGIN_WHITELIST = [origin for origin in os.getenv("CORS_ORIGIN_WHITELIST", "").split(",") if origin.startswith("http://") or origin.startswith("https://")]
+# Ensure CSRF_TRUSTED_ORIGINS and CORS_ORIGIN_WHITELIST values start with a scheme (http:// or https://)
 
 
 # Application definition
@@ -164,7 +161,9 @@ STATIC_URL = '/static/'
 
 
 # CORS settings
-CORS_ALLOW_ALL = False
+
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if host]
+CORS_ORIGIN_WHITELIST = [f"https://{host}" for host in os.getenv("CORS_ORIGIN_WHITELIST", "").split(",") if host]
 
 
 CORS_ALLOW_CREDENTIALS = True

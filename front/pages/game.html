@@ -1,300 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ping Pong Game</title>
-    <style>
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(45deg, #ff6f61, #d500f9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        text-align: center;
-      }
 
-      @keyframes fadeInOut {
-        0%,
-        20% {
-          opacity: 1;
-          transform: scale(1.2);
-        }
-        50% {
-          opacity: 0;
-          transform: scale(1);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1.2);
-        }
-      }
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ping Pong Game</title>
+<style>
+  * {
+	box-sizing: border-box;
+}
 
-      .container {
-        text-align: center;
-      }
+body, html {
+	height: 100%;
+	width: 100%;
+	font-family: 'Segoe UI', sans-serif;
+	background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	overflow: hidden;
+}
 
-      button {
-        background-color: #555;
-        color: white;
-        padding: 10px 20px;
-        margin: 10px;
-        border: none;
-        cursor: pointer;
-      }
+.container {
+  margin-top: 80px;
+	background-color: #1e1e1e;
+	padding: 40px 30px;
+	border-radius: 20px;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+	width: 90%;
+	max-width: 420px;
+	margin-bottom: 20px;
+}
 
-      button:hover {
-        background-color: #777;
-      }
+#ping_pong_game {
+	font-size: 2.8rem;
+	font-weight: bold;
+	color: #ffeb3b;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-bottom: 30px;
+	text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
+	animation: glow 2s ease-in-out infinite alternate;
+}
 
-      input[type="text"] {
-        padding: 10px;
-        margin-top: 10px;
-      }
+@keyframes glow {
+	0% {
+		text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
+	}
+	100% {
+		text-shadow: 0 0 20px #ffc107, 0 0 30px #ffc107;
+	}
+}
 
-      canvas {
-        background: #000;
-        display: block;
-        margin: 0 auto;
-      }
-      #game-link {
-        font-size: 1.25rem; /* Daha büyük yazı tipi boyutu */
-        font-weight: bold; /* Kalın yazı tipi */
-        color: #ffc107; /* Altın rengi */
-        text-transform: uppercase; /* Büyük harflerle göster */
-        letter-spacing: 2px; /* Harfler arasında boşluk */
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Hafif gölge efekti */
-        transition: color 0.3s ease, transform 0.3s ease; /* Geçiş efektleri */
-      }
-      #game-link i {
-        margin-right: 8px; /* İkon ile metin arasına boşluk ekle */
-      }
+input[type="text"] {
+	width: 100%;
+	padding: 14px;
+	margin: 20px 0;
+	border: none;
+	border-radius: 25px;
+	background-color: rgba(255, 255, 255, 0.1);
+	color: white;
+	font-size: 1rem;
+	text-align: center;
+	transition: all 0.3s ease;
+}
 
-      #game-link:hover {
-        color: #ff5722; /* Turuncuya geçiş */
-        transform: scale(1.1); /* Hafif büyütme efekti */
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Gölgeyi artır */
-      }
-      #ping_pong_game {
-        font-size: 3rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-        color: #ffeb3b;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-        animation: glow 2s ease-in-out infinite alternate,
-          float 3s ease-in-out infinite;
-      }
+input::placeholder {
+	color: #bbb;
+}
 
-      @keyframes glow {
-        0% {
-          text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), 0 0 10px #ffeb3b,
-            0 0 20px #ffeb3b, 0 0 30px #ffeb3b, 0 0 40px #ffeb3b;
-        }
-        100% {
-          text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), 0 0 20px #ffc107,
-            0 0 30px #ffc107, 0 0 40px #ffc107, 0 0 50px #ffc107;
-        }
-      }
+button {
+	width: 100%;
+	padding: 14px;
+	border: none;
+	border-radius: 25px;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-bottom: 15px;
+}
 
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-    </style>
-  </head>
+#create-room-button {
+	background: linear-gradient(to right, #4facfe, #00f2fe);
+	color: white;
+}
 
-  <body>
-    <div id="join-page" class="container">
-      <div class="message mt-3" id="message"></div>
-      <h1 id="ping_pong_game">Ping Pong Game</h1>
-      <form id="create-room">
-        <button id="create-room-button" type="submit">Create Room</button>
-      </form>
-      <form id="join-room">
-        <input
-          type="text"
-          id="roomName"
-          name="room_code"
-          placeholder="Enter Room Code"
-          required
-        />
-        <button id="join_room_tournament" type="submit">Join Room</button>
-      </form>
-    </div>
-    <div id="gameCanvas" class="form-group">
-      <canvas id="pongCanvas" width="800" height="400"></canvas>
-    </div>
-    <form id="retry-id">
-      <h1 id="winner"></h1>
-      <button type="submit">Retry</button>
-    </form>
-    <!-- <script>
-        // roomName değişkenini Django'dan alıyoruz
-        const roomName = "{{ room_name }}";
-        // Canvas ve context tanımlamaları
-        const canvas = document.getElementById('pongCanvas');
-        const context = canvas.getContext('2d');
+#join_room_tournament {
+	background: linear-gradient(to right, #43e97b, #38f9d7);
+	color: white;
+}
 
-        // Paddle ve top boyutları ve hızları
-        let paddleWidth = 10;
-        let paddleHeight = 100;
-        let ballRadius = 10;
-        let ballSpeedX = 5;
-        let ballSpeedY = 5;
+button:hover {
+	transform: scale(1.03);
+	filter: brightness(1.1);
+}
 
-        // Oyuncu ve rakip paddle konumları
-        let playerY = (canvas.height - paddleHeight) / 2;
-        let opponentY = (canvas.height - paddleHeight) / 2;
-        let ballX = canvas.width / 2;
-        let ballY = canvas.height / 2;
+#game-link {
+	display: inline-block;
+	background-color: #6a4f09;
+	color: #ffc107;
+	font-size: 1.1rem;
+	font-weight: bold;
+	padding: 12px 24px;
+	border-radius: 25px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+	text-decoration: none;
+	margin-top: 10px;
+	transition: all 0.3s ease;
+}
 
-        let isHost = false; // Bu oyuncunun ev sahibi olup olmadığını belirler
-        let isPlayerA = true; // Oyuncunun paddle A'yı (sol paddle) kontrol edip etmediğini belirler
+#game-link:hover {
+	background-color: #9e6d0c;
+	transform: scale(1.05);
+	color: white;
+}
 
-        // WebSocket bağlantısını oluşturun
-        const ws = new WebSocket('wss://localhost/ws/game/' + roomName + '/');
+#pongCanvas {
+	background: #000;
+	border: 4px solid #fff;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+	margin-top: 20px;
+}
 
-        // Dikdörtgen (paddle) çizme fonksiyonu
-        function drawRect(x, y, w, h) {
-            context.fillStyle = "#FFF";
-            context.fillRect(x, y, w, h);
-        }
+#retry-id {
+	margin-top: 20px;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+}
 
-        // Daire (top) çizme fonksiyonu
-        function drawCircle(x, y, r) {
-            context.fillStyle = "#FFF";
-            context.beginPath();
-            context.arc(x, y, r, 0, Math.PI * 2);
-            context.closePath();
-            context.fill();
-        }
+#retry-id h1 {
+	color: #4fc3f7;
+	font-size: 2rem;
+	margin-bottom: 20px;
+}
 
-        // Canvas'ı temizleme fonksiyonu
-        function clear() {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-        }
+#retry-id button {
+	width: 180px;
+	background-color: #4fc3f7;
+	color: #000;
+}
+</style>
+</head>
 
-        // Oyuncu raketini yukarı hareket ettir
-        function movePaddleUp() {
-            if (isPlayerA) {
-                playerY = Math.max(0, playerY - 10);
-                sendAction({type: 'paddle_move', playerY: playerY});
-            } else {
-                opponentY = Math.max(0, opponentY - 10);
-                sendAction({type: 'paddle_move', opponentY: opponentY});
-            }
-        }
+<body>
+	<div id="join-page" class="container">
+        <div class="message mt-3" id="message"></div>
+		<h1 id="ping_pong_game">Ping Pong Game</h1>
+		<form id="create-room">
+			<button id="create-room-button" type="submit">Create Room</button>
+		</form>
+		<form id="join-room">
+			<input type="text" id="roomName" name="room_code" placeholder="Enter Room Code" required>
+			<button id="join_room_tournament" type="submit">Join Room</button>
+		</form>
+	</div>
+	<div id="gameCanvas" class="form-group">
+		<canvas id="pongCanvas" width="800" height="400"></canvas>
+	</div>
+	<form id="retry-id">
+		<h1 id="winner"></h1>
+		<button type="submit">Retry</button>
+	</form>
 
-        // Oyuncu raketini aşağı hareket ettir
-        function movePaddleDown() {
-            if (isPlayerA) {
-                console.log("ben buradayım");
-                playerY = Math.min(canvas.height - paddleHeight, playerY + 10);
-                sendAction({type: 'paddle_move', playerY: playerY});
-            } else {
-                console.log("ben buradayım değil");
-                opponentY = Math.min(canvas.height - paddleHeight, opponentY + 10);
-                sendAction({type: 'paddle_move', opponentY: opponentY});
-            }
-        }
+</body>
 
-        // WebSocket üzerinden hareketleri gönder
-        function sendAction(action) {
-            ws.send(JSON.stringify(action));
-        }
-
-        // Gelen WebSocket mesajlarını işle
-        function handleGameAction(action) {
-            if (action.type === 'paddle_move') {
-                if (isPlayerA) {
-                    opponentY = action.opponentY !== undefined ? action.opponentY : opponentY;
-                } else {
-                    playerY = action.playerY !== undefined ? action.playerY : playerY;
-                }
-            } else if (action.type === 'ball_update' && !isHost) {
-                ballX = action.ballX;
-                ballY = action.ballY;
-            }
-        }
-
-        // Topun pozisyonunu güncelle ve ekrana çiz (Ev sahibi oyuncu tarafından kontrol edilir)
-        function updateBall() {
-            if (isHost) {
-                ballX += ballSpeedX;
-                ballY += ballSpeedY;
-
-                if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
-                    ballSpeedY = -ballSpeedY;
-                }
-
-                if (ballX - ballRadius < 0 || ballX + ballRadius > canvas.width) {
-                    ballSpeedX = -ballSpeedX;
-                }
-
-                sendAction({type: 'ball_update', ballX: ballX, ballY: ballY});
-            }
-        }
-
-        // Raketleri ve topu ekrana çiz
-        function draw() {
-            clear();
-
-            // Oyuncu raketi (sol paddle)
-            drawRect(0, playerY, paddleWidth, paddleHeight);
-
-            // Rakip raketi (sağ paddle)
-            drawRect(canvas.width - paddleWidth, opponentY, paddleWidth, paddleHeight);
-
-            // Top
-            drawCircle(ballX, ballY, ballRadius);
-        }
-
-        // Oyun döngüsü (Ev sahibi oyuncu için)
-        function gameLoop() {
-            updateBall();
-            draw();
-        }
-
-        // Başlangıçta ev sahibi olup olmadığını ve hangi paddle'ı kontrol ettiğini belirle
-        function checkHost() {
-            isHost = Math.random() > 0.5; // %50 şansla ev sahibi belirle
-            isPlayerA = Math.random() > 0.5; // %50 şansla paddle A veya B'yi kontrol et
-            setInterval(gameLoop, 1000 / 60); // 60 FPS ile oyunu çalıştır
-        }
-
-        // Klavye olaylarını dinleyerek paddle hareketlerini kontrol et
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowUp') {
-                movePaddleUp();
-            } else if (e.key === 'ArrowDown') {
-                movePaddleDown();
-            }
-        });
-
-        // WebSocket bağlantısı açıldığında ev sahibi olup olmadığını kontrol et
-        ws.onopen = function() {
-            checkHost();
-        };
-
-        // WebSocket'ten gelen mesajları işle
-        ws.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            handleGameAction(data);
-        };
-
-    </script> -->
-  </body>
 </html>

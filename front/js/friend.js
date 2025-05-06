@@ -234,8 +234,6 @@ socket.onmessage = (e) => {
   else {
     loadBlockedList();
     loadFriendsList();
-    //setupChatRoom();
-    //loadPage("friend");
   }
 };
 
